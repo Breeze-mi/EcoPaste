@@ -120,6 +120,7 @@
           "custom_operation_button": "自定義"
         },
         "hints": {
+          "auto_deduplicate": "複製已存在的內容時，是否在列表中保持唯一（關閉後仍不會在資料庫中重複存儲）",
           "auto_favorite": "新增或編輯備註後自動收藏",
           "auto_paste": "當使用滑鼠左鍵時，快速將內容貼上到輸入位置",
           "auto_sort": "複製已存在的內容時排列到最前面",
@@ -130,6 +131,7 @@
           "show_original_content": "添加備註後，滑鼠懸停時是否顯示原內容"
         },
         "label": {
+          "auto_deduplicate": "自動去重",
           "auto_favorite": "自動收藏",
           "auto_paste": "自動貼上",
           "auto_paste_double": "雙擊",
@@ -205,7 +207,8 @@
         "hints": {
           "change_success": "更改成功",
           "custom_path": "自訂",
-          "default_path": "恢復預設"
+          "default_path": "恢復預設",
+          "restart_required": "日誌路徑將在重啟應用後生效"
         },
         "label": {
           "data_storage_path": "資料存儲路徑",

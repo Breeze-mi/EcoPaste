@@ -120,6 +120,7 @@
           "custom_operation_button": "自定义"
         },
         "hints": {
+          "auto_deduplicate": "复制已存在的内容时，是否在列表中保持唯一（关闭后会在数据库中重复存储）",
           "auto_favorite": "新增或编辑备注后自动收藏",
           "auto_paste": "鼠标左键操作时，快速粘贴内容至输入位置",
           "auto_sort": "复制已存在的内容时排列到最前面",
@@ -130,6 +131,7 @@
           "show_original_content": "添加备注后，鼠标悬停时是否显示原内容"
         },
         "label": {
+          "auto_deduplicate": "自动去重",
           "auto_favorite": "自动收藏",
           "auto_paste": "自动粘贴",
           "auto_paste_double": "双击",
@@ -205,7 +207,8 @@
         "hints": {
           "change_success": "更改成功",
           "custom_path": "自定义",
-          "default_path": "恢复默认"
+          "default_path": "恢复默认",
+          "restart_required": "日志路径将在重启应用后生效"
         },
         "label": {
           "data_storage_path": "数据存储路径",

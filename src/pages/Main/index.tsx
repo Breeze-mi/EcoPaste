@@ -118,13 +118,18 @@ const Main = () => {
   });
 
   // 切换剪贴板监听状态
-  useTauriListen<boolean>(LISTEN_KEY.TOGGLE_LISTEN_CLIPBOARD, ({ payload }) => {
-    if (payload) {
-      startListening();
-    } else {
-      stopListening();
-    }
-  });
+  useTauriListen<boolean>(
+    LISTEN_KEY.TOGGLE_LISTEN_CLIPBOARD,
+    async ({ payload }) => {
+      try {
+        if (payload) {
+          await startListening();
+        } else {
+          await stopListening();
+        }
+      } catch (_error) {}
+    },
+  );
 
   // 监听粘贴为纯文本的快捷键
   useKeyPress(shortcut.pastePlain, (event) => {

@@ -120,6 +120,7 @@
           "custom_operation_button": "カスタム"
         },
         "hints": {
+          "auto_deduplicate": "既存の内容をコピーする際、リスト内で一意性を保つ（無効にしてもデータベースには重複保存されません）",
           "auto_favorite": "メモの追加・編集後に自動お気に入り登録",
           "auto_paste": "左クリック時に、内容を素早く入力フィールドに貼り付けます",
           "auto_sort": "既存の内容をコピーして最前面に配置する",
@@ -130,6 +131,7 @@
           "show_original_content": "メモを追加した後、マウスをホバーしたときに元のコンテンツを表示するかどうか"
         },
         "label": {
+          "auto_deduplicate": "自動重複削除",
           "auto_favorite": "自動コレクション",
           "auto_paste": "自動ペースト",
           "auto_paste_double": "ダブルクリック",
@@ -205,7 +207,8 @@
         "hints": {
           "change_success": "変更成功",
           "custom_path": "カスタマイズ",
-          "default_path": "デフォルトに戻す"
+          "default_path": "デフォルトに戻す",
+          "restart_required": "ログパスはアプリ再起動後に有効になります"
         },
         "label": {
           "data_storage_path": "データ保存パス",

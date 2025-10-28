@@ -73,13 +73,14 @@ const General = () => {
       </ProList>
 
       <ProList header={t("preference.settings.update_settings.title")}>
-        <ProSwitch
+        {/* 自动更新开关已禁用 - 不再支持自动更新 */}
+        {/* <ProSwitch
           onChange={(value) => {
             globalStore.update.auto = value;
           }}
           title={t("preference.settings.update_settings.label.auto_update")}
           value={update.auto}
-        />
+        /> */}
 
         <ProSwitch
           description={t(

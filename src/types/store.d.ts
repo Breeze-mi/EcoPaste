@@ -47,6 +47,7 @@ export interface GlobalStore {
     appName?: string;
     appVersion?: string;
     saveDataDir?: string;
+    saveLogDir?: string;
   };
 }
 
@@ -89,6 +90,7 @@ export interface ClipboardStore {
     autoFavorite: boolean;
     deleteConfirm: boolean;
     autoSort: boolean;
+    autoDeduplicate: boolean;
     showOriginalContent: boolean;
   };
 

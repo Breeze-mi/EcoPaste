@@ -1,6 +1,6 @@
 [package]
 name = "EcoPaste"
-version = "0.6.0-beta.3"
+version = "0.6.0"
 description = "一款开源的跨平台剪贴板管理工具"
 authors = []
 edition = "2021"
@@ -21,6 +21,7 @@ tauri-build = { version = "2", features = [] }
 tauri = { workspace = true, features = ["tray-icon", "protocol-asset", "macos-private-api", "image-ico"] }
 serde = { workspace = true, features = ["derive"] }
 serde_json.workspace = true
+dirs = "5"
 tauri-plugin-single-instance = "2"
 tauri-plugin-autostart = "2"
 tauri-plugin-sql = { version = "2", features = ["sqlite"] }

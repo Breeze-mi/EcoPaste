@@ -3,7 +3,6 @@ import { check, type Update } from "@tauri-apps/plugin-updater";
 import { useCreation, useReactive } from "ahooks";
 import { Flex, Modal, message, Typography } from "antd";
 import clsx from "clsx";
-import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
@@ -12,7 +11,6 @@ import { useImmediateKey } from "@/hooks/useImmediateKey";
 import { useTauriListen } from "@/hooks/useTauriListen";
 import { showWindow } from "@/plugins/window";
 import { globalStore } from "@/stores/global";
-import type { Interval } from "@/types/shared";
 import { dayjs, formatDate } from "@/utils/dayjs";
 import styles from "./index.module.scss";
 
@@ -28,26 +26,25 @@ interface State {
 
 const UpdateApp = () => {
   const { t } = useTranslation();
-  const timerRef = useRef<Interval>();
+  // timerRef 已移除 - 不再需要定时检查更新
   const state = useReactive<State>({ download: 0 });
   const [messageApi, contextHolder] = message.useMessage();
 
-  // 监听自动更新配置变化
-  useImmediateKey(globalStore.update, "auto", (value) => {
-    clearInterval(timerRef.current);
+  // 自动更新已禁用 - 不再自动检查更新和定时检查
+  // useImmediateKey(globalStore.update, "auto", (value) => {
+  //   clearInterval(timerRef.current);
 
-    if (!value) return;
+  //   if (!value) return;
 
-    checkUpdate();
+  //   checkUpdate();
 
-    timerRef.current = setInterval(checkUpdate, 1000 * 60 * 60 * 24);
-  });
+  //   timerRef.current = setInterval(checkUpdate, 1000 * 60 * 60 * 24);
+  // });
 
-  // 监听参与测试版本配置变化
+  // 监听参与测试版本配置变化 - 保留此功能，用于手动检查更新时的版本选择
   useImmediateKey(globalStore.update, "beta", (value) => {
-    if (!value) return;
-
-    checkUpdate();
+    // 不自动检查，只更新配置
+    void value;
   });
 
   // 监听更新事件

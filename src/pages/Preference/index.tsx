@@ -3,7 +3,7 @@ import { useCreation, useMount } from "ahooks";
 import { Flex } from "antd";
 import clsx from "clsx";
 import { MacScrollbar } from "mac-scrollbar";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSnapshot } from "valtio";
 import UnoIcon from "@/components/UnoIcon";
@@ -20,6 +20,7 @@ import { raf } from "@/utils/bom";
 import { isMac } from "@/utils/is";
 import { saveStore } from "@/utils/store";
 import About from "./components/About";
+import Backup from "./components/Backup";
 import Clipboard from "./components/Clipboard";
 import General from "./components/General";
 import History from "./components/History";
@@ -52,12 +53,20 @@ const Preference = () => {
   // 监听快捷键切换窗口显隐
   useRegister(toggleWindowVisible, [shortcut.preference]);
 
-  // 配置项变化通知其它窗口和本地存储
-  const handleStoreChanged = () => {
-    emit(LISTEN_KEY.STORE_CHANGED, { clipboardStore, globalStore });
+  // 配置项变化通知其它窗口和本地存储（添加防抖优化）
+  const handleStoreChanged = useMemo(() => {
+    let timeoutId: NodeJS.Timeout;
 
-    saveStore();
-  };
+    return () => {
+      emit(LISTEN_KEY.STORE_CHANGED, { clipboardStore, globalStore });
+
+      // 防抖保存，避免频繁 I/O
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        saveStore().catch((_error) => {});
+      }, 500);
+    };
+  }, []);
 
   const menuItems = useCreation(() => {
     return [
@@ -85,12 +94,12 @@ const Preference = () => {
         key: "shortcut",
         label: t("preference.menu.title.shortcut"),
       },
-      // {
-      //   content: <Backup />,
-      //   icon: "i-lucide:database-backup",
-      //   key: "backup",
-      //   label: t("preference.menu.title.backup"),
-      // },
+      {
+        content: <Backup />,
+        icon: "i-lucide:database-backup",
+        key: "backup",
+        label: t("preference.menu.title.backup"),
+      },
       {
         content: <About />,
         icon: "i-lucide:info",

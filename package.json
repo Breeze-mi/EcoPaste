@@ -5,7 +5,7 @@
 		"name": "ayangweb",
 		"email": "ayangweb@foxmail.com"
 	},
-	"version": "0.6.0-beta.3",
+	"version": "0.6.0",
 	"type": "module",
 	"scripts": {
 		"dev": "run-s build:icon dev:vite",
@@ -101,7 +101,7 @@
 	},
 	"lint-staged": {
 		"**.{ts,tsx,json}": [
-			"biome check --write --no-errors-on-unmatched"
+			"biome check --write --no-errors-on-unmatched --unsafe"
 		]
 	}
 }

@@ -25,12 +25,19 @@ const initStore = async () => {
   globalStore.env.appVersion = await getVersion();
   globalStore.env.saveDataDir ??= await appDataDir();
 
+  // 初始化日志目录，默认使用安装目录
+  if (!globalStore.env.saveLogDir) {
+    const { appLogDir } = await import("@tauri-apps/api/path");
+    globalStore.env.saveLogDir = await appLogDir();
+  }
+
   // @ts-expect-error
   if (clipboardStore.window.style === "float") {
     clipboardStore.window.style = "standard";
   }
 
   await mkdir(globalStore.env.saveDataDir, { recursive: true });
+  await mkdir(globalStore.env.saveLogDir, { recursive: true });
 };
 
 /**

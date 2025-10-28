@@ -48,7 +48,63 @@ export const getDatabase = async () => {
     .addColumn("subtype", "text")
     .execute();
 
+  // 创建索引以提高查询性能
+  try {
+    await db.schema
+      .createIndex("idx_history_createTime")
+      .ifNotExists()
+      .on("history")
+      .column("createTime")
+      .execute();
+
+    await db.schema
+      .createIndex("idx_history_group")
+      .ifNotExists()
+      .on("history")
+      .column("group")
+      .execute();
+
+    await db.schema
+      .createIndex("idx_history_favorite")
+      .ifNotExists()
+      .on("history")
+      .column("favorite")
+      .execute();
+
+    await db.schema
+      .createIndex("idx_history_type")
+      .ifNotExists()
+      .on("history")
+      .column("type")
+      .execute();
+  } catch (_error) {}
+
   return db;
+};
+
+/**
+ * 优化数据库性能
+ */
+export const optimizeDatabase = async () => {
+  const db = await getDatabase();
+
+  try {
+    // VACUUM 命令会重建数据库文件，回收未使用的空间
+    await db.executeQuery({
+      parameters: [],
+      query: { parameters: [], sql: "VACUUM" },
+      queryId: "vacuum",
+      sql: "VACUUM",
+    } as any);
+
+    // ANALYZE 命令会更新查询优化器的统计信息
+    await db.executeQuery({
+      parameters: [],
+      query: { parameters: [], sql: "ANALYZE" },
+      queryId: "analyze",
+      sql: "ANALYZE",
+    } as any);
+  } catch (_error) {}
 };
 
 export const destroyDatabase = async () => {

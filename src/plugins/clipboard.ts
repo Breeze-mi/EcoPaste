@@ -33,20 +33,19 @@ export const getClipboardTextSubtype = async (value: string) => {
   }
 };
 
-export const writeToClipboard = (data: DatabaseSchemaHistory) => {
+export const writeToClipboard = async (data: DatabaseSchemaHistory) => {
   const { type, value, search } = data;
-
   switch (type) {
     case "text":
-      return writeText(value);
+      return await writeText(value);
     case "rtf":
-      return writeRTF(search, value);
+      return await writeRTF(search, value);
     case "html":
-      return writeHTML(search, value);
+      return await writeHTML(search, value);
     case "image":
-      return writeImage(value);
+      return await writeImage(value);
     case "files":
-      return writeFiles(value);
+      return await writeFiles(value);
   }
 };
 
@@ -67,5 +66,5 @@ export const pasteToClipboard = async (
     await writeToClipboard(data);
   }
 
-  return paste();
+  return await paste();
 };

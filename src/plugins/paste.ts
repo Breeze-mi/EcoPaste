@@ -7,6 +7,6 @@ export const COMMAND = {
 /**
  * 粘贴剪贴板内容
  */
-export const paste = () => {
-  return invoke(COMMAND.PASTE);
+export const paste = async () => {
+  return await invoke(COMMAND.PASTE);
 };

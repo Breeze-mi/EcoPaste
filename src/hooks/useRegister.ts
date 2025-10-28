@@ -17,25 +17,45 @@ export const useRegister = (
   useAsyncEffect(async () => {
     const [shortcuts] = deps;
 
+    // 先注销旧的快捷键
     for await (const shortcut of castArray(oldShortcuts)) {
       if (!shortcut) continue;
 
-      const registered = await isRegistered(shortcut);
+      try {
+        const registered = await isRegistered(shortcut);
 
-      if (registered) {
-        await unregister(shortcut);
+        if (registered) {
+          await unregister(shortcut);
+        }
+      } catch (_err) {
+        // 忽略注销错误
       }
     }
 
     if (!shortcuts) return;
 
-    await register(shortcuts, (event) => {
-      if (event.state === "Released") return;
+    // 注册新的快捷键，如果已注册则先注销
+    try {
+      for await (const shortcut of castArray(shortcuts)) {
+        if (!shortcut) continue;
 
-      handler(event);
-    });
+        const registered = await isRegistered(shortcut);
 
-    setOldShortcuts(shortcuts);
+        if (registered) {
+          await unregister(shortcut);
+        }
+      }
+
+      await register(shortcuts, (event) => {
+        if (event.state === "Released") return;
+
+        handler(event);
+      });
+
+      setOldShortcuts(shortcuts);
+    } catch (_err) {
+      // 忽略注册错误（可能是快捷键冲突）
+    }
   }, deps);
 
   useUnmount(() => {
@@ -43,6 +63,10 @@ export const useRegister = (
 
     if (!shortcuts) return;
 
-    unregister(shortcuts);
+    try {
+      unregister(shortcuts);
+    } catch (_err) {
+      // 忽略注销错误
+    }
   });
 };

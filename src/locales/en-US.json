@@ -120,6 +120,7 @@
           "custom_operation_button": "Custom"
         },
         "hints": {
+          "auto_deduplicate": "Keep content unique in the list when copying existing content (will not store duplicates in database even when disabled)",
           "auto_favorite": "Auto-favorite after adding or editing a note",
           "auto_paste": "Quickly paste content to the input field when using the left mouse button",
           "auto_sort": "Alignment to the top when copying existing content",
@@ -130,6 +131,7 @@
           "show_original_content": "Whether to display the original content on mouse hover after adding a note"
         },
         "label": {
+          "auto_deduplicate": "Auto Deduplicate",
           "auto_favorite": "Auto Favorite",
           "auto_paste": "Auto Paste",
           "auto_paste_double": "Double Click",
@@ -205,7 +207,8 @@
         "hints": {
           "change_success": "Changed successfully",
           "custom_path": "Custom",
-          "default_path": "Restore Default"
+          "default_path": "Restore Default",
+          "restart_required": "Log path will take effect after restarting the app"
         },
         "label": {
           "data_storage_path": "Data Storage Path",

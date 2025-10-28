@@ -23,10 +23,15 @@ const SearchInput: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
   const [isComposition, { setTrue, setFalse }] = useBoolean();
   const { t } = useTranslation();
 
+  // 添加防抖优化，避免频繁查询数据库
   useEffect(() => {
     if (isComposition) return;
 
-    rootState.search = value;
+    const timeoutId = setTimeout(() => {
+      rootState.search = value;
+    }, 300); // 300ms 防抖
+
+    return () => clearTimeout(timeoutId);
   }, [value, isComposition]);
 
   useTauriFocus({

@@ -61,7 +61,7 @@
   },
   "bundle": {
     "active": true,
-    "createUpdaterArtifacts": true,
+    "createUpdaterArtifacts": false,
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -71,7 +71,17 @@
     ],
     "resources": ["assets/tray.ico"],
     "shortDescription": "EcoPaste",
-    "targets": ["nsis", "dmg", "app", "appimage", "deb", "rpm"]
+    "targets": ["nsis", "dmg", "app", "appimage", "deb", "rpm"],
+    "windows": {
+      "nsis": {
+        "installerIcon": "icons/icon.ico",
+        "installMode": "both",
+        "languages": ["SimpChinese", "English"]
+      },
+      "webviewInstallMode": {
+        "type": "embedBootstrapper"
+      }
+    }
   },
   "identifier": "com.ayangweb.EcoPaste",
   "mainBinaryName": "EcoPaste",
@@ -80,8 +90,9 @@
       "requireLiteralLeadingDot": false
     },
     "updater": {
-      "endpoints": ["https://api.ecopaste.cn/update"],
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDcwNEIyQkUwRjNEMTg4NgpSV1NHR0QwUHZySUVCeXFRQzZ4aEpNRWdFdThVQ2I4b2dSQktRcmNtV1dYTFJJV1h2VmVVZXBWSgo="
+      "active": false,
+      "endpoints": [],
+      "pubkey": ""
     }
   },
   "productName": "EcoPaste",

@@ -121,6 +121,19 @@ const ClipboardSettings = () => {
 
         <ProSwitch
           description={t(
+            "preference.clipboard.content_settings.hints.auto_deduplicate",
+          )}
+          onChange={(value) => {
+            clipboardStore.content.autoDeduplicate = value;
+          }}
+          title={t(
+            "preference.clipboard.content_settings.label.auto_deduplicate",
+          )}
+          value={content.autoDeduplicate}
+        />
+
+        <ProSwitch
+          description={t(
             "preference.clipboard.content_settings.hints.auto_sort",
           )}
           onChange={(value) => {

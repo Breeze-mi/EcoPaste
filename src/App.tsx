@@ -84,7 +84,19 @@ const App = () => {
 
   // 监听 promise 的错误，输出到日志
   useEventListener("unhandledrejection", ({ reason }) => {
-    const message = isString(reason) ? reason : JSON.stringify(reason);
+    // 忽略空对象错误
+    if (
+      !reason ||
+      (typeof reason === "object" && Object.keys(reason).length === 0)
+    ) {
+      return;
+    }
+
+    const message = isString(reason)
+      ? reason
+      : reason instanceof Error
+        ? reason.message
+        : JSON.stringify(reason);
 
     error(message);
   });

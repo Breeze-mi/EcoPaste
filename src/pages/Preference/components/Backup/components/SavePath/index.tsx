@@ -27,11 +27,11 @@ const SavePath: FC<{ state: State }> = (props) => {
   const { state } = props;
   const { t } = useTranslation();
   const [dataDir, setDataDir] = useState("");
-  const [logDir, setLogDir] = useState("");
+  const [defaultLogDir, setDefaultLogDir] = useState("");
 
   useMount(async () => {
     setDataDir(await tauriDataDir());
-    setLogDir(await appLogDir());
+    setDefaultLogDir(await appLogDir());
   });
 
   const handleChange = async (isDefault = false) => {
@@ -69,10 +69,35 @@ const SavePath: FC<{ state: State }> = (props) => {
     }
   };
 
+  const handleLogPathChange = async (isDefault = false) => {
+    try {
+      const dstDir = isDefault
+        ? defaultLogDir
+        : await open({ directory: true });
+
+      if (!isString(dstDir) || isEqualLogPath(dstDir)) return;
+
+      globalStore.env.saveLogDir = dstDir;
+
+      message.success(
+        t("preference.data_backup.storage_settings.hints.change_success"),
+      );
+      message.info(
+        t("preference.data_backup.storage_settings.hints.restart_required"),
+      );
+    } catch (error: any) {
+      message.error(error);
+    }
+  };
+
   const isEqualPath = (dstDir = dataDir) => {
     const dstPath = join(dstDir, getSaveDataDirName());
 
     return isEqual(dstPath, getSaveDataPath());
+  };
+
+  const isEqualLogPath = (dstDir = defaultLogDir) => {
+    return isEqual(dstDir, globalStore.env.saveLogDir || defaultLogDir);
   };
 
   const description = (path = getSaveDataPath()) => {
@@ -121,11 +146,36 @@ const SavePath: FC<{ state: State }> = (props) => {
       </ProListItem>
 
       <ProListItem
-        description={description(logDir)}
+        description={description(globalStore.env.saveLogDir || defaultLogDir)}
         title={t(
           "preference.data_backup.storage_settings.label.log_storage_path",
         )}
-      />
+      >
+        <Space.Compact>
+          <Tooltip
+            title={t(
+              "preference.data_backup.storage_settings.hints.custom_path",
+            )}
+          >
+            <Button
+              icon={<NodeIndexOutlined />}
+              onClick={() => handleLogPathChange()}
+            />
+          </Tooltip>
+
+          <Tooltip
+            title={t(
+              "preference.data_backup.storage_settings.hints.default_path",
+            )}
+          >
+            <Button
+              disabled={isEqualLogPath()}
+              icon={<ReloadOutlined />}
+              onClick={() => handleLogPathChange(true)}
+            />
+          </Tooltip>
+        </Space.Compact>
+      </ProListItem>
     </ProList>
   );
 };
