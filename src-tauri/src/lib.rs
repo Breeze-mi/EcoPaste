@@ -1,11 +1,14 @@
 mod core;
 
 use core::{prevent_default, setup};
+
 use std::path::PathBuf;
 use tauri::{generate_context, Builder, Manager, WindowEvent};
 use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_eco_window::{show_main_window, MAIN_WINDOW_LABEL, PREFERENCE_WINDOW_LABEL};
-use tauri_plugin_log::{Target, TargetKind};
+use tauri_plugin_log::{Target, TargetKind, TimezoneStrategy};
+
+const LOCAL_TIMEZONE_STRATEGY: TimezoneStrategy = TimezoneStrategy::UseLocal;
 
 fn get_log_dir() -> PathBuf {
     // 尝试从配置文件读取自定义日志路径
@@ -94,6 +97,7 @@ pub fn run() {
                     }),
                     Target::new(TargetKind::Webview),
                 ])
+                .timezone_strategy(LOCAL_TIMEZONE_STRATEGY)
                 .build(),
         )
         // 快捷键插件: https://github.com/tauri-apps/tauri-plugin-global-shortcut
