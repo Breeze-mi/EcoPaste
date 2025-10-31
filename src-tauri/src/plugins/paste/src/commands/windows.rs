@@ -84,32 +84,57 @@ pub fn get_previous_window() -> Option<isize> {
 }
 
 // 聚焦上一个窗口
-fn focus_previous_window() {
+fn focus_previous_window() -> bool {
     unsafe {
         let hwnd = match get_previous_window() {
             Some(hwnd) => hwnd as HWND,
-            None => return,
+            None => {
+                log::warn!("没有找到上一个窗口");
+                return false;
+            }
         };
 
         if hwnd.is_null() {
-            return;
+            log::warn!("窗口句柄为空");
+            return false;
         }
 
-        SetForegroundWindow(hwnd);
+        let result = SetForegroundWindow(hwnd);
+        if result == 0 {
+            log::warn!("设置前台窗口失败");
+            return false;
+        }
+
+        true
     }
 }
 
 // 粘贴
 #[command]
-pub async fn paste() {
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
+pub async fn paste() -> Result<(), String> {
+    let mut enigo =
+        Enigo::new(&Settings::default()).map_err(|e| format!("初始化输入模拟器失败: {}", e))?;
 
-    focus_previous_window();
+    // 聚焦上一个窗口
+    if !focus_previous_window() {
+        return Err("无法聚焦到目标窗口".to_string());
+    }
 
-    wait(100);
+    // 增加延迟以确保窗口切换完成，提高稳定性
+    wait(150);
 
-    enigo.key(Key::Shift, Press).unwrap();
-    // insert 的微软虚拟键码：https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
-    enigo.key(Key::Other(0x2D), Click).unwrap();
-    enigo.key(Key::Shift, Release).unwrap();
+    // 使用 Ctrl+V 粘贴，更可靠且兼容性更好
+    enigo
+        .key(Key::Control, Press)
+        .map_err(|e| format!("按下 Ctrl 键失败: {}", e))?;
+    wait(10);
+    enigo
+        .key(Key::Unicode('v'), Click)
+        .map_err(|e| format!("按下 V 键失败: {}", e))?;
+    wait(10);
+    enigo
+        .key(Key::Control, Release)
+        .map_err(|e| format!("释放 Ctrl 键失败: {}", e))?;
+
+    Ok(())
 }

@@ -78,12 +78,29 @@ const Item: FC<ItemProps> = (props) => {
     handleNext,
   });
 
-  const handleClick = (type: typeof content.autoPaste) => {
+  const handleClick = async (
+    type: typeof content.autoPaste,
+    event: React.MouseEvent,
+  ) => {
     rootState.activeId = id;
 
     if (content.autoPaste !== type) return;
 
-    pasteToClipboard(data);
+    // 检查是否正在选择文本，如果是则不执行粘贴
+    const selection = window.getSelection();
+    if (selection && selection.toString().length > 0) {
+      return;
+    }
+
+    // 阻止事件冒泡，避免干扰
+    event.stopPropagation();
+
+    // 添加小延迟确保状态更新完成，避免竞争条件
+    await new Promise((resolve) => setTimeout(resolve, 10));
+
+    try {
+      await pasteToClipboard(data);
+    } catch (_error) {}
   };
 
   const renderContent = () => {
@@ -110,9 +127,9 @@ const Item: FC<ItemProps> = (props) => {
         },
       )}
       gap={4}
-      onClick={() => handleClick("single")}
+      onClick={(e) => handleClick("single", e)}
       onContextMenu={handleContextMenu}
-      onDoubleClick={() => handleClick("double")}
+      onDoubleClick={(e) => handleClick("double", e)}
       vertical
     >
       <Header {...rest} data={data} handleNote={handleNote} />
