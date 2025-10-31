@@ -169,11 +169,13 @@
       },
       "window_settings": {
         "hints": {
-          "back_top": "ウィンドウがアクティブになったら、一番上までスクロールし、最初のバーを選択する。"
+          "back_top": "ウィンドウがアクティブになったら、一番上までスクロールし、最初のバーを選択する。",
+          "show_back_top_button": "クリップボードリストの右下にトップに戻るボタンを表示する"
         },
         "label": {
           "back_top": "トップページに戻る",
           "show_all": "起動時に全グループに切り替わる",
+          "show_back_top_button": "トップに戻るボタンを表示",
           "window_position": "クリップボード位置",
           "window_position_center": "スクリーンセンター",
           "window_position_follow": "マウスに従う",

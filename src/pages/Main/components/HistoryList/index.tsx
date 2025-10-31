@@ -4,17 +4,20 @@ import clsx from "clsx";
 import { findIndex } from "es-toolkit/compat";
 import { useContext, useEffect, useRef } from "react";
 import { Virtuoso, type VirtuosoHandle } from "react-virtuoso";
+import { useSnapshot } from "valtio";
 import Scrollbar from "@/components/Scrollbar";
 import { LISTEN_KEY } from "@/constants";
 import { useHistoryList } from "@/hooks/useHistoryList";
 import { useKeyboard } from "@/hooks/useKeyboard";
 import { useTauriListen } from "@/hooks/useTauriListen";
+import { clipboardStore } from "@/stores/clipboard";
 import { MainContext } from "../..";
 import Item from "./components/Item";
 import NoteModal, { type NoteModalRef } from "./components/NoteModal";
 
 const HistoryList = () => {
   const { rootState } = useContext(MainContext);
+  const { window } = useSnapshot(clipboardStore);
   const noteModelRef = useRef<NoteModalRef>(null);
   const [deleteModal, contextHolder] = Modal.useModal();
   const virtuosoRef = useRef<VirtuosoHandle>(null);
@@ -91,11 +94,13 @@ const HistoryList = () => {
 
       <NoteModal ref={noteModelRef} />
 
-      <FloatButton.BackTop
-        duration={0}
-        onClick={scrollToTop}
-        target={() => scrollerRef.current!}
-      />
+      {window.showBackTopButton && (
+        <FloatButton.BackTop
+          duration={0}
+          onClick={scrollToTop}
+          target={() => scrollerRef.current!}
+        />
+      )}
 
       {contextHolder}
     </>

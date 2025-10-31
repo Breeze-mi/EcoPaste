@@ -33,6 +33,7 @@ export const clipboardStore = proxy<ClipboardStore>({
     backTop: false,
     position: "remember",
     showAll: false,
+    showBackTopButton: false,
     style: "standard",
   },
 });

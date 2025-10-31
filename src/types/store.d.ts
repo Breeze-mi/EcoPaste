@@ -67,6 +67,7 @@ export interface ClipboardStore {
     position: "remember" | "follow" | "center";
     backTop: boolean;
     showAll: boolean;
+    showBackTopButton: boolean;
   };
 
   // 音效设置

@@ -169,11 +169,13 @@
       },
       "window_settings": {
         "hints": {
-          "back_top": "激活窗口时，滚动至顶部并选中首条"
+          "back_top": "激活窗口时，滚动至顶部并选中首条",
+          "show_back_top_button": "在剪贴板列表右下角显示回到顶部按钮"
         },
         "label": {
           "back_top": "激活时回到顶部",
           "show_all": "激活时切换至全部分组",
+          "show_back_top_button": "显示回到顶部按钮",
           "window_position": "窗口位置",
           "window_position_center": "屏幕中心",
           "window_position_follow": "跟随鼠标",

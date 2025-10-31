@@ -169,11 +169,13 @@
       },
       "window_settings": {
         "hints": {
-          "back_top": "啟動視窗時，滾動至頂部並選中首條"
+          "back_top": "啟動視窗時，滾動至頂部並選中首條",
+          "show_back_top_button": "在剪貼簿清單右下角顯示回到頂部按鈕"
         },
         "label": {
           "back_top": "啟動時回到頂部",
           "show_all": "啟動時切換至全部分組",
+          "show_back_top_button": "顯示回到頂部按鈕",
           "window_position": "視窗位置",
           "window_position_center": "螢幕中央",
           "window_position_follow": "跟隨滑鼠",

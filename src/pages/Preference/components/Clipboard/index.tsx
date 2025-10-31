@@ -34,6 +34,19 @@ const ClipboardSettings = () => {
           title={t("preference.clipboard.window_settings.label.show_all")}
           value={window.showAll}
         />
+
+        <ProSwitch
+          description={t(
+            "preference.clipboard.window_settings.hints.show_back_top_button",
+          )}
+          onChange={(value) => {
+            clipboardStore.window.showBackTopButton = value;
+          }}
+          title={t(
+            "preference.clipboard.window_settings.label.show_back_top_button",
+          )}
+          value={window.showBackTopButton}
+        />
       </ProList>
 
       <AudioSettings />
